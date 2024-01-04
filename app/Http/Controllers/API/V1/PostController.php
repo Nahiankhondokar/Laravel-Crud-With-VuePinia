@@ -28,13 +28,12 @@ class PostController extends Controller
         }
     }
 
-    public function edit()
+    public function update(Request $request, Post $post)
     {
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        $post->update();
 
-    }
-
-    public function update()
-    {
-
+        return response()->json('post updated');
     }
 }

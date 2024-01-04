@@ -22,5 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('post')->group(function(){
     Route::get('/index', [PostController::class, 'index']);
     Route::post('/store', [PostController::class, 'store']);
+    Route::post('/update/{post}', [PostController::class, 'update']);
 });
 

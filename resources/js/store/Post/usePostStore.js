@@ -5,6 +5,7 @@ export const usePostStore = defineStore("posts", {
     state : () => ({
         title : null,
         description : null,
+        edit_id : null,
         posts : [],
         loader : false,
     }), 
@@ -18,14 +19,19 @@ export const usePostStore = defineStore("posts", {
                 description : this.description
             }
 
-            axios.post('api/post/store', formData).then(res => {
-                this.title = null;
-                this.description = null;
+           if(this.edit_id > 0){
+            axios.post('api/post/update/'+this.edit_id, formData).then(res => {
+                this.fromReset();
                 this.featchPostItems();
-
-                console.log(res.data);
             })
             .catch(er => console.log(er));
+           }else {
+            axios.post('api/post/store', formData).then(res => {
+                this.fromReset();
+                this.featchPostItems();
+            })
+            .catch(er => console.log(er));
+           }
         },
         async featchPostItems(){
             this.posts = [];
@@ -38,11 +44,20 @@ export const usePostStore = defineStore("posts", {
                 // loader
             }
         },
-        editPostItem(){
+        editPostItem(id){
+            let post = this.posts.find(editPost => editPost.id == id);
+            this.title = post.title;
+            this.description = post.description;
+            this.edit_id = post.id
 
         },
         deletePostItem(){
 
+        },
+        fromReset() {
+            this.title = null;
+            this.description = null;
+            this.edit_id = null
         }
     }
 });

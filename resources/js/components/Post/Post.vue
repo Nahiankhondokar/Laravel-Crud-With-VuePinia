@@ -24,6 +24,15 @@
                                         >Go somewhere</a
                                     >
                                 </div>
+                                <button
+                                    class="btn btn-sm btn-info"
+                                    @click="editPostItem(post.id)"
+                                >
+                                    Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
                             </div>
                         </div>
                         <div v-if="posts == ''">
@@ -65,7 +74,7 @@
                             <input type="file" class="form-control" />
                         </div>
                         <button type="submit" class="btn btn-primary">
-                            Submit
+                            {{ edit_id ? "Update" : "Save" }}
                         </button>
                     </form>
                 </div>
@@ -79,10 +88,10 @@ import { storeToRefs } from "pinia";
 import { usePostStore } from "../../store/Post/usePostStore";
 
 // get all state value
-const { title, description, posts } = storeToRefs(usePostStore());
+const { title, description, posts, edit_id } = storeToRefs(usePostStore());
 
 // get all actions
-const { addPostItem, featchPostItems } = usePostStore();
+const { addPostItem, featchPostItems, editPostItem } = usePostStore();
 featchPostItems();
 </script>
 
