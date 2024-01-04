@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template lang="">
     <div>
         <div class="container">
@@ -23,15 +21,16 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <form>
+                    <form @submit.prevent="addPostItem">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Title</label>
+                            <label for="title">Title</label>
                             <input
                                 type="text"
                                 class="form-control"
-                                id="exampleInputEmail1"
+                                id="title"
                                 aria-describedby="emailHelp"
                                 placeholder="Title"
+                                v-model="title"
                             />
                             <small id="emailHelp" class="form-text text-muted"
                                 >We'll never share your email with anyone
@@ -47,6 +46,7 @@
                                 class="form-control"
                                 id="exampleInputPassword1"
                                 placeholder="Descrption"
+                                v-model="description"
                             />
                         </div>
                         <div class="form-group">
@@ -62,5 +62,16 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { storeToRefs } from "pinia";
+import { usePostStore } from "../../store/Post/usePostStore";
+
+// get all state value
+const { title, description, posts } = storeToRefs(usePostStore());
+
+// get all actions
+const { addPostItem } = usePostStore();
+</script>
 
 <style lang=""></style>
