@@ -3,20 +3,31 @@
         <div class="container">
             <div class="row mt-5">
                 <div class="col-md-8">
-                    <div class="card" style="width: 18rem">
-                        <img
-                            class="card-img-top"
-                            src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1704326400&semt=sph"
-                            alt="Card image cap"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">
-                                Some quick example text to build on the card
-                                title and make up the bulk of the card's
-                                content.
-                            </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="row">
+                        <div
+                            class="col-md-6 mb-3"
+                            v-for="post in posts"
+                            :key="post.id"
+                        >
+                            <div class="card" v-if="post">
+                                <img
+                                    class="card-img-top"
+                                    src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1704326400&semt=sph"
+                                    alt="Card image cap"
+                                />
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text">
+                                        {{ post.description }}
+                                    </p>
+                                    <a href="#" class="btn btn-primary"
+                                        >Go somewhere</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="posts == ''">
+                            <h3 class="text-center text-danger">No Data</h3>
                         </div>
                     </div>
                 </div>
@@ -71,7 +82,8 @@ import { usePostStore } from "../../store/Post/usePostStore";
 const { title, description, posts } = storeToRefs(usePostStore());
 
 // get all actions
-const { addPostItem } = usePostStore();
+const { addPostItem, featchPostItems } = usePostStore();
+featchPostItems();
 </script>
 
 <style lang=""></style>
