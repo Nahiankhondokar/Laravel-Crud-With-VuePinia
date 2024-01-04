@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template lang="">
     <div>
         <div class="container">
@@ -60,7 +62,5 @@
         </div>
     </div>
 </template>
-
-<script setup></script>
 
 <style lang=""></style>
