@@ -51,8 +51,10 @@ export const usePostStore = defineStore("posts", {
             this.edit_id = post.id
 
         },
-        deletePostItem(){
-
+        deletePostItem(id){
+            axios.get('api/post/delete/'+id).then(res => {
+                this.featchPostItems();
+            })
         },
         fromReset() {
             this.title = null;

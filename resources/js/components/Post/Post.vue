@@ -30,7 +30,10 @@
                                 >
                                     Edit
                                 </button>
-                                <button class="btn btn-sm btn-danger">
+                                <button
+                                    class="btn btn-sm btn-danger"
+                                    @click="deletePostItem(post.id)"
+                                >
                                     Delete
                                 </button>
                             </div>
@@ -91,7 +94,8 @@ import { usePostStore } from "../../store/Post/usePostStore";
 const { title, description, posts, edit_id } = storeToRefs(usePostStore());
 
 // get all actions
-const { addPostItem, featchPostItems, editPostItem } = usePostStore();
+const { addPostItem, featchPostItems, editPostItem, deletePostItem } =
+    usePostStore();
 featchPostItems();
 </script>
 
