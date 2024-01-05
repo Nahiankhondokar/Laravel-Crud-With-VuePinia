@@ -20,9 +20,7 @@
                                     <p class="card-text">
                                         {{ post.description }}
                                     </p>
-                                    <a href="#" class="btn btn-primary"
-                                        >Go somewhere</a
-                                    >
+                                    <small>{{ post.created_at }}</small>
                                 </div>
                                 <button
                                     class="btn btn-sm btn-info"
