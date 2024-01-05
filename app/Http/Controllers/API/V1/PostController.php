@@ -17,9 +17,18 @@ class PostController extends Controller
     public function store(Request $request)
     {
         if($request->input('title') != null && $request->input('description') != null){
+
+            $imageName = '';
+            if($request->hasFile('image')){
+                $image = $request->file('image');
+                $imageName = time().rand().'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+            }
+
             Post::create([
                 'title'       => $request->input('title'),
                 'description' => $request->input('description'),
+                'image'       => $imageName
             ]);
 
             return response()->json('Post created');
@@ -30,8 +39,21 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
+        $imageName = '';
+        if($request->hasFile('image')){
+            if(file_exists(public_path('images/').$post->image)){
+                @unlink(public_path('images/').$post->image);
+            }
+            $image = $request->file('image');
+            $imageName = time().rand().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        }else {
+            $imageName = $post->image;
+        }
+
         $post->title = $request->input('title');
         $post->description = $request->input('description');
+        $post->image = $imageName;
         $post->update();
 
         return response()->json('post updated');

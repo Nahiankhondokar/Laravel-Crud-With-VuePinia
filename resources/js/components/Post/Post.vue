@@ -12,7 +12,7 @@
                             <div class="card" v-if="post">
                                 <img
                                     class="card-img-top"
-                                    src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1704326400&semt=sph"
+                                    :src="`images/` + post.image"
                                     alt="Card image cap"
                                 />
                                 <div class="card-body">
@@ -74,7 +74,11 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Image</label>
-                            <input type="file" class="form-control" />
+                            <input
+                                type="file"
+                                class="form-control"
+                                @change="imageUpload"
+                            />
                         </div>
                         <button type="submit" class="btn btn-primary">
                             {{ edit_id ? "Update" : "Save" }}
@@ -94,8 +98,13 @@ import { usePostStore } from "../../store/Post/usePostStore";
 const { title, description, posts, edit_id } = storeToRefs(usePostStore());
 
 // get all actions
-const { addPostItem, featchPostItems, editPostItem, deletePostItem } =
-    usePostStore();
+const {
+    addPostItem,
+    featchPostItems,
+    editPostItem,
+    deletePostItem,
+    imageUpload,
+} = usePostStore();
 featchPostItems();
 </script>
 

@@ -5,6 +5,7 @@ export const usePostStore = defineStore("posts", {
     state : () => ({
         title : null,
         description : null,
+        image : null,
         edit_id : null,
         posts : [],
         loader : false,
@@ -14,19 +15,25 @@ export const usePostStore = defineStore("posts", {
     },
     actions : {
         addPostItem(){
-            let formData = {
-                title : this.title,
-                description : this.description
+            let formData = new FormData();
+            formData.append('title', this.title);
+            formData.append('description', this.description);
+            formData.append('image', this.image);
+
+            let config = {
+                header : {
+                    'Content-type'  : 'image/png'
+                }
             }
 
            if(this.edit_id > 0){
-            axios.post('api/post/update/'+this.edit_id, formData).then(res => {
+            axios.post('api/post/update/'+this.edit_id, formData, config).then(res => {
                 this.fromReset();
                 this.featchPostItems();
             })
             .catch(er => console.log(er));
            }else {
-            axios.post('api/post/store', formData).then(res => {
+            axios.post('api/post/store', formData, config).then(res => {
                 this.fromReset();
                 this.featchPostItems();
             })
@@ -38,6 +45,7 @@ export const usePostStore = defineStore("posts", {
             try{
                 let posts = await axios.get('api/post/index');
                 this.posts = posts.data;
+                console.log(this.posts);
             }catch(error){
                 console.log(error);
             }finally{
@@ -56,10 +64,14 @@ export const usePostStore = defineStore("posts", {
                 this.featchPostItems();
             })
         },
+        imageUpload(event){
+            this.image = event.target.files[0];
+        },
         fromReset() {
             this.title = null;
             this.description = null;
-            this.edit_id = null
+            this.image = null;
+            this.edit_id = null;
         }
     }
 });
