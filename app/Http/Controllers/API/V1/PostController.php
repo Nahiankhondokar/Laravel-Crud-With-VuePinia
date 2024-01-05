@@ -61,6 +61,9 @@ class PostController extends Controller
 
     public function destroy(Request $request, Post $post)
     {
+        if(file_exists(public_path('images/').$post->image)){
+            @unlink(public_path('images/').$post->image);
+        }
         $post->delete();
         return response()->json('post delete');
     }
