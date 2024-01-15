@@ -11,7 +11,9 @@ export const usePostStore = defineStore("posts", {
         loader : false,
     }), 
     getters : {
-
+        getTitle : (state) => {
+            return state.title;
+        }
     },
     actions : {
         addPostItem(){
